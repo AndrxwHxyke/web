@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Inicio</title>
+        <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        </head>
+        <body class="fondoquienes_somos">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">RESTAURANTE VACCEM</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="quienes_somos.html">Quiénes Somos</a></li>
+            <li class="nav-item"><a class="nav-link" href="menu.html">Menú</a></li>
+            <li class="nav-item"><a class="nav-link" href="bar.html">Bar</a></li>
+            <li class="nav-item"><a class="nav-link" href="reservas.html">Reservas</a></li>   
+            <li class="nav-item"><a class="nav-link" href="contactenos.html">Contáctenos</a></li>
+        </div>
+        </nav>
+        <div class="fondoquienes_somos">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conoce más sobre nuestro restaurante, nuestros chefs y nuestra filosofía de ofrecer una experiencia gastronómica excepcional.">
+    <title>Bar Don Camaron</title>
+    <link rel="stylesheet" href="bootstrap//css/bootstrap.min.css" integrity="sha384-1d4E5Q1Fb/UJ7XW3Z/JFJPpfY5U7k4Bz0SZSTdpO5jRE9Bx8pJRT+3YbC16sVRkp" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .availability-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .availability-table th, .availability-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .availability-table th {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .availability-table td.available {
+            background-color: #d4edda;
+            cursor: pointer;
+        }
+
+        .availability-table td.booked {
+            background-color: #f8d7da;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <main class="container mt-5">
+        <h1 class="text-center mb-4">Reserva de Fechas</h1>
+        <p class="text-center mb-4">Selecciona un día de la semana para organizar tu fiesta.</p>
+
+        <table class="availability-table">
+            <thead>
+                <tr>
+                    <th>Día de la Semana</th>
+                    <th>Disponibilidad</th>
+                </tr>
+            </thead>
+            <tbody id="availability-table-body">
+                <!-- Las filas se generarán con JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            <h3 class="text-center mb-4">Formulario de Reserva</h3>
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="day">Día de la Semana</label>
+                    <input type="text" class="form-control" id="day" name="day" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contacto</label>
+                    <input type="text" class="form-control" id="contact" name="contact" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Reservar</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Días de la semana
+        const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+        // Generar tabla de disponibilidad
+        const tableBody = document.getElementById('availability-table-body');
+        daysOfWeek.forEach(day => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${day}</td>
+                <td class="available" onclick="selectDay('${day}')">Disponible</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        function selectDay(day) {
+            // Desmarcar cualquier fila previamente seleccionada
+            document.querySelectorAll('.availability-table td').forEach(td => {
+                td.classList.remove('selected');
+            });
+
+            // Marcar el día seleccionado
+            const selectedCell = Array.from(document.querySelectorAll('.availability-table td'))
+                .find(td => td.textContent === 'Disponible' && td.parentElement.children[0].textContent === day);
+
+            if (selectedCell) {
+                selectedCell.classList.add('selected');
+                document.getElementById('day').value = day;
+            }
+        }
+
+        document.getElementById('reservation-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const day = document.getElementById('day').value;
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+
+            if (day && name && contact) {
+                // Aquí podrías agregar lógica para enviar los datos al servidor o procesar la reserva
+                alert(`Reserva realizada para ${day} a nombre de ${name}.`);
+                
+                // Actualizar la disponibilidad
+                const selectedCell = Array.from(document.querySelectorAll('.availability-table td'))
+                    .find(td => td.textContent === 'Disponible' && td.parentElement.children[0].textContent === day);
+
+                if (selectedCell) {
+                    selectedCell.classList.remove('available');
+                    selectedCell.classList.add('booked');
+                    selectedCell.textContent = 'Reservado';
+                }
+
+                // Limpiar formulario
+                this.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>
